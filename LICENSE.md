@@ -1,7 +1,7 @@
 Copyright (c) 2023 Jacques van Wyk
 
 This code is dual licensed under the Unlicense and the MIT license. The terms
-of both of these license are reproduced below.
+of these licenses are reproduced below.
 
 
 # The MIT License

@@ -262,6 +262,210 @@
     {\partial/\partial #1}
     {\partial/\partial #1}}
 
+% Differential
+\NewDocumentCommand{\dd}{somo}
+  {
+    d
+    \IfValueT{#4}
+      {
+        \IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}
+      }
+    #3
+    \IfValueT{#4}
+      {
+        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+        \rvert_{#4}
+        \IfBooleanT{#1}{\mathclose{}}
+      }
+  }
+
+% Derivative
+\NewDocumentCommand{\dvDisplay}{somooo}
+  {
+    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+    \frac
+      {d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}}
+      {d #3 \IfValueT{#4}{^{#4}}}
+    \IfValueT{#6}
+      {
+        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+        \rvert_{#6}
+        \IfBooleanT{#1}{\mathclose{}}
+      }
+  }
+
+\NewDocumentCommand{\dvInline}{somooo}
+  {
+    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+    d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
+    /
+    d #3 \IfValueT{#4}{^{#4}}
+    \IfValueT{#6}
+      {
+        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+        \rvert_{#6}
+        \IfBooleanT{#1}{\mathclose{}}
+      }
+  }
+
+\NewDocumentCommand{\dv}{somooo}
+  {
+    \mathchoice
+    {
+      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+      \frac
+        {d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}}
+        {d #3 \IfValueT{#4}{^{#4}}}
+      \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+    }
+    {
+      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
+      /
+      d #3 \IfValueT{#4}{^{#4}}
+      \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+    }
+    {
+      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
+      /
+      d #3 \IfValueT{#4}{^{#4}}
+      \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+    }
+    {
+      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
+      /
+      d #3 \IfValueT{#4}{^{#4}}
+      \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+    }
+  }
+
+
+\newcounter{PdvParseExponentArgumentCounter}
+
+\NewDocumentCommand{\@PdvParseExponent}{m}
+  {
+    \ifnum\value{PdvParseExponentArgumentCounter}=0
+      \setcounter{PdvParseExponentArgumentCounter}{1}
+      \partial #1
+    \else
+      ^{#1}
+    \fi
+  }
+
+\NewDocumentCommand{\@PdvParseVariable}
+  { >{\SplitList{,}}m}
+  {
+    \setcounter{PdvParseExponentArgumentCounter}{0}
+    \ProcessList{#1}{\@PdvParseExponent}
+  }
+
+\NewDocumentCommand{\pdvDisplay}
+  {so>{\SplitList{;}}mooo}
+  {
+    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+    \frac
+      {\partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}}
+      {\ProcessList{#3}{\@PdvParseVariable}}
+    \IfValueT{#6}
+    {
+      \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+      \rvert_{#6}
+      \IfBooleanT{#1}{\mathclose{}}
+    }
+  }
+
+\NewDocumentCommand{\pdvInline}
+  {so>{\SplitList{;}}mooo}
+  {
+    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+    \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
+    /
+    \ProcessList{#3}{\@PdvParseVariable}
+    \IfValueT{#6}
+    {
+      \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+      \rvert_{#6}
+      \IfBooleanT{#1}{\mathclose{}}
+    }
+  }
+
+\NewDocumentCommand{\pdv}
+  {so>{\SplitList{;}}mooo}
+  {
+    \mathchoice
+      {
+        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+        \frac
+          {\partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}}
+          {\ProcessList{#3}{\@PdvParseVariable}}
+        \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+      }
+      {
+        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
+        /
+        \ProcessList{#3}{\@PdvParseVariable}
+        \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+      }
+      {
+        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
+        /
+        \ProcessList{#3}{\@PdvParseVariable}
+        \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+      }
+      {
+        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
+        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
+        /
+        \ProcessList{#3}{\@PdvParseVariable}
+        \IfValueT{#6}
+        {
+          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
+          \rvert_{#6}
+          \IfBooleanT{#1}{\mathclose{}}
+        }
+      }
+  }
+
+
 % Set builder
 % \set{x \st P(x)} -> {x | P(x)}
 % Invoking this with a * as in \set* will grow the {|} to fit the contents like  a \left\right pair.
