@@ -16,37 +16,41 @@
 \RequirePackage{enumitem}
 
 % Section titles
-\renewcommand\@seccntformat[1]{\csname the#1\endcsname\enspace}
+\renewcommand{\@seccntformat}[1]{\csname the#1\endcsname.\enspace}
 
 \renewcommand{\section}{\@startsection{section}{1}{\z@}%
     {-3.25ex\@plus -1ex \@minus -.2ex}%
     {1.5ex \@plus .2ex}%
-    {\normalfont\large\bfseries}}
+    {\centering\normalfont\bfseries}}
 
 \renewcommand{\subsection}{\@startsection{subsection}{2}{\z@}%
     {-3.25ex\@plus -1ex \@minus -.2ex}%
     {1.5ex \@plus .2ex}%
-    {\normalfont\normalsize\bfseries}}
+    {\normalfont\bfseries}}
 
 % Article title
-\renewcommand\@maketitle{%
+\renewcommand{\@maketitle}{%
     \newpage
     \null
-    \vskip 2em%
+    \vskip 2em
     \begin{center}%
         \let\footnote\thanks
-        {\Large\bfseries \@title \par}%
-        \vskip 1.5em%
+        {\Large\bfseries \@title \par}
+        \vskip 1.5em
         {\large
-            \lineskip .5em%
-            \begin{tabular}[t]{c}%
+            \lineskip .5em
+            \begin{tabular}[t]{c}
                 \@author
-            \end{tabular}\par}%
-            \vskip 1em%
-        {\large \@date}%
+            \end{tabular}
+            \par}
+        \vskip 1em
+        {\large \@date}
     \end{center}%
     \par
     \vskip 1em}
+
+% Equation numbering
+\numberwithin{equation}{section}
 
 % Spacing around display environments
 \AtBeginDocument{%
@@ -87,6 +91,10 @@
 \theoremstyle{defnstyle}
 \newtheorem{defn}[thm]{Definition}
 \newtheorem*{defn*}{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem*{defns*}{Definitions}
+\newtheorem{examp}[thm]{Example}
+\newtheorem*{examp*}{Example}
 
 \newtheoremstyle{probstyle}%
     {0.35\baselineskip}%
@@ -149,345 +157,122 @@
 
 % Number sets
 \newcommand{\numset}[1]{\vvmathbb{#1}}
-\newcommand{\RR}{\numset{R}} % The real line ℝ
-\newcommand{\CC}{\numset{C}} % The complex plane ℂ
-\newcommand{\QQ}{\numset{Q}} % The rational numbers ℚ
-\newcommand{\NN}{\numset{N}} % The natural numbers ℕ
-\newcommand{\KK}{\numset{K}} % The field ℝ or ℂ
-\newcommand{\ZZ}{\numset{Z}} % The integers ℤ
-
-% The n-sphere
-% \Sph{n} -> 𝕊ⁿ
+\newcommand{\RR}{\numset{R}}
+\newcommand{\CC}{\numset{C}}
+\newcommand{\QQ}{\numset{Q}}
+\newcommand{\NN}{\numset{N}}
+\newcommand{\KK}{\numset{K}}
+\newcommand{\ZZ}{\numset{Z}}
 \newcommand{\Sph}[1]{\numset{S}^{#1}}
 
-% The m×n matrices over a ring R
-% \Mat          -> Mat
-% \Mat[R]       -> Mat(R)
-% \Mat[R][m]    -> Matₘ(R)
-% \Mat[R][m][n] -> Matₘₓₙ(R)
-\NewDocumentCommand{\Mat}{ooo}{\IfValueTF{#1}%
-    {\operatorname{Mat}\IfValueTF{#3}%
-            {_{#2 \times #3}}%
-            {\IfValueT{#2}{_{#2}}}%
-        (#1)}%
-    {\mathrm{Mat}}}
+\NewDocumentCommand{\Lp}{mm}{L^{#2}(#1)}
+\NewDocumentCommand{\LpF}{m}{L^{#1}}
+\NewDocumentCommand{\Sob}{mm}{W^{#2}(#1)}
+\NewDocumentCommand{\SobF}{m}{W^{#1}}
+\NewDocumentCommand{\Mat}{moo}{\operatorname{Mat}(\IfValueTF{#3}{#2 \times #3,}{\IfValueT{#2}{#2,}}#1)}
 
-% The general linear group
-% \GL       -> GL
-% \GL[V]    -> GL(V)
-% \GL[F][n] -> GLₙ(F)
-\NewDocumentCommand{\GL}{oo}{\IfValueTF{#1}%
-    {\operatorname{GL}\IfValueT{#2}{_{#2}}(#1)}%
-    {\mathrm{GL}}}
+\NewDocumentCommand{\GL}{mo}{\operatorname{GL}(\IfValueT{#2}{#2,}#1)}
+\NewDocumentCommand{\Hom}{mm}{\operatorname{Hom}(#1, #2)}
+\NewDocumentCommand{\End}{m}{\operatorname{End}(#1)}
+\NewDocumentCommand{\Ext}{mo}{\Lambda\IfValueT{#2}{^{#2}}(#1)}
+\NewDocumentCommand{\Sym}{mo}{\Sigma\IfValueT{#2}{^{#2}}(#1)}
+\NewDocumentCommand{\Sec}{m}{\Gamma(#1)}
 
-% The space of morphisms from one space to another
-% \Hom       -> Hom
-% \Hom[E]    -> Hom(E)
-% \Hom[E][F] -> Hom(A, B)
-\NewDocumentCommand{\Hom}{oo}{\IfValueTF{#2}%
-    {\operatorname{Hom}(#1,#2)}%
-    {\IfValueTF{#1}%
-        {\operatorname{Hom}(#1)}%
-        {\mathrm{Hom}}}}
+\NewDocumentCommand{\Tan}{mo}{T\IfValueT{#2}{_{#2}}#1}
+\NewDocumentCommand{\Cotan}{mo}{T^*\IfValueT{#2}{_{#2}}#1}
+\NewDocumentCommand{\SFunc}{m}{C^\infty(#1)}
+\NewDocumentCommand{\SMap}{mm}{C^\infty(#1,#2)}
+\NewDocumentCommand{\Form}{mo}{\Omega\IfValueT{#2}{^{#2}}(#1)}
+\NewDocumentCommand{\HarForm}{mo}{H\IfValueT{#2}{^{#2}}(#1)}
+\NewDocumentCommand{\VBForm}{mmo}{\Omega_{#2}\IfValueT{#3}{^{#3}}(#1)}
+\NewDocumentCommand{\HarVBForm}{mmo}{H_{#2}\IfValueT{#3}{^{#3}}(#1)}
+\NewDocumentCommand{\TrivVB}{mmo}{\underline{#1}_{#2}\IfValueT{#3}{^{#3}}}
 
-% The space of endomorphisms from a space to itself
-% \End    -> Hom
-% \End[E] -> End(E)
-\NewDocumentCommand{\End}{o}{\IfValueTF{#1}%
-    {\operatorname{End}(#1)}%
-    {\mathrm{End}}}
+\newcommand{\deq}{\vcentcolon=}
+\newcommand{\iso}{\cong}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\im}{im}
 
-% The exterior power of a vector space
-% \Ext       -> Λ
-% \Ext[V]    -> Λ(V)
-% \Ext[V][n] -> Λⁿ(V)
-\NewDocumentCommand{\Ext}{oo}{\upLambda\IfValueT{#2}{^{#2}}\IfValueT{#1}{(#1)}}
+\newcommand{\dsum}{\oplus}
+\newcommand{\dprod}{\times}
+\newcommand{\tprod}{\otimes}
+\newcommand{\bigdprod}{\prod}
+\newcommand{\bigdsum}{\bigoplus}
+\newcommand{\bigtprod}{\bigotimes}
 
-% The symmetric power of a vector space
-% \Sym       -> Σ
-% \Sym[V]    -> Σ(V)
-% \Sym[V][n] -> Σⁿ(V)
-\NewDocumentCommand{\Sym}{oo}{\upSigma\IfValueT{#2}{^{#2}}\IfValueT{#1}{(#1)}}
+\NewDocumentCommand{\iprod}{somm}{\IfBooleanTF{#1}%
+    {\IfValueTF{#2}%
+        {#2\langle #3, #4 #2\rangle}%
+        {\left\langle #3, #4 \right\rangle}}%
+    {\langle #3, #4 \rangle}}
 
-% The space of sections of a bundle
-% \Sec       -> Γ
-% \Sec[E]    -> Γ(E)
-% \Sec[E][n] -> Γⁿ(E)
-\NewDocumentCommand{\Sec}{oo}{\upGamma\IfValueT{#2}{^{#2}}\IfValueT{#1}{(#1)}}
+\newcommand{\con}{\nabla}
+\newcommand{\lap}{\upDelta}
+\newcommand{\hstar}{\mathord{*}}
+\DeclareMathOperator{\dvg}{div}
 
-% The space of differential forms of a manifold
-% \Form       -> Ω
-% \Form[E]    -> Ω(E)
-% \Form[E][n] -> Ωⁿ(E)
-\NewDocumentCommand{\Form}{oo}{\upOmega\IfValueT{#2}{^{#2}}\IfValueT{#1}{(#1)}}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
 
-% The space of smooth functions from a space to ℝ
-% \SFn       -> C∞
-% \SFn[U]    -> C∞(U)
-% \SFn[U][n] -> Cⁿ(U)
-\NewDocumentCommand{\SFn}{oo}{\IfValueTF{#1}%
-    {\operatorname{C}^{\IfValueTF{#2}{#2}{\infty}}}%
-    {\mathrm{C}^\infty}}
+\NewDocumentCommand{\evalat}{smm}{\IfBooleanTF{#1}%
+    {\mathopen{}%
+        \kern-\nulldelimiterspace%
+        \left.%
+        #1%
+        \right\rvert_{#2}%
+        \mathclose{}}%
+    {#1\rvert_{#2}}}
 
-% The space of smooth maps from once space to another
-% \SMap -> C∞
-% \SMap ->
-\NewDocumentCommand{\SMap}{ooo}{\IfValueTF{#2}%
-    {\mathrm{C}^{\IfValueTF{#3}{#3}{\infty}}(#1,#2)}%
-    {\IfValueTF{#1}%
-        {\operatorname{C}^\infty(#1)}
-        {\mathrm{C}}}}
+\NewDocumentCommand{\dd}{m}{d#1}
 
-\newcommand{\deq}{\vcentcolon=} % Define
-\newcommand{\iso}{\cong} % Isomorphism
-\newcommand{\con}{\nabla} % A connection or covariant derivative
-\newcommand{\dsum}{\oplus} % Direct sum
-\newcommand{\dprod}{\times} % Direct product
-\newcommand{\tprod}{\otimes} % Tensor products
+\NewDocumentCommand{\dv}{smo}{\IfBooleanTF{#1}%
+    {\frac{d\IfValueT{#3}{#3}}{d#2}}%
+    {d\IfValueT{#3}{#3}/d#2}}
 
-\DeclarePairedDelimiter{\abs}{\lvert}{\rvert} % Absolute value
-\DeclarePairedDelimiter{\norm}{\lVert}{\rVert} % Norm
-\DeclarePairedDelimiter{\ip}{\langle}{\rangle} % Inner product
+\NewDocumentCommand{\mdv}{smmo}{\IfBooleanTF{#1}%
+    {\frac{d^{#3}\IfValueT{#4}{#4}}{d#2^{#3}}}%
+    {d^{#3}\IfValueT{#4}{#4}/d#1^{#3}}}
 
-\DeclareMathOperator{\id}{id} % Identity map
-\DeclareMathOperator{\dvg}{div} % Divergence
-\DeclareMathOperator{\im}{im} % Image of a map
-
-% Coordinate vector field
-% \cvf{x} -> ∂/∂x
-% Uses \frac in display math and a / in inline math, superscripts and subscripts.
-\DeclareDocumentCommand{\cvf}{g}{\mathchoice%
-    {\frac{\partial}{\partial #1}}
-    {\partial/\partial #1}
-    {\partial/\partial #1}
-    {\partial/\partial #1}}
-
-% Differential
-\NewDocumentCommand{\dd}{somo}
-  {
-    d
-    \IfValueT{#4}
-      {
-        \IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}
-      }
-    #3
-    \IfValueT{#4}
-      {
-        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-        \rvert_{#4}
-        \IfBooleanT{#1}{\mathclose{}}
-      }
-  }
-
-% Derivative
-\NewDocumentCommand{\dvDisplay}{somooo}
-  {
-    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-    \frac
-      {d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}}
-      {d #3 \IfValueT{#4}{^{#4}}}
-    \IfValueT{#6}
-      {
-        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-        \rvert_{#6}
-        \IfBooleanT{#1}{\mathclose{}}
-      }
-  }
-
-\NewDocumentCommand{\dvInline}{somooo}
-  {
-    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-    d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
-    /
-    d #3 \IfValueT{#4}{^{#4}}
-    \IfValueT{#6}
-      {
-        \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-        \rvert_{#6}
-        \IfBooleanT{#1}{\mathclose{}}
-      }
-  }
-
-\NewDocumentCommand{\dv}{somooo}
-  {
-    \mathchoice
-    {
-      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-      \frac
-        {d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}}
-        {d #3 \IfValueT{#4}{^{#4}}}
-      \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-    }
-    {
-      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
-      /
-      d #3 \IfValueT{#4}{^{#4}}
-      \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-    }
-    {
-      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
-      /
-      d #3 \IfValueT{#4}{^{#4}}
-      \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-    }
-    {
-      \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-      d \IfValueT{#4}{^{#4}} \IfValueT{#5}{#5}
-      /
-      d #3 \IfValueT{#4}{^{#4}}
-      \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-    }
-  }
-
+\NewDocumentCommand{\pdv}{smo}{\IfBooleanTF{#1}%
+    {\frac{\partial\IfValueT{#3}{#3}}{\partial #2}}%
+    {\partial/\partial #2}}
 
 \newcounter{PdvParseExponentArgumentCounter}
 
-\NewDocumentCommand{\@PdvParseExponent}{m}
-  {
+\NewDocumentCommand{\@PdvParseExponent}{m}{%
     \ifnum\value{PdvParseExponentArgumentCounter}=0
-      \setcounter{PdvParseExponentArgumentCounter}{1}
-      \partial #1
+        \setcounter{PdvParseExponentArgumentCounter}{1}
+        \partial #1
     \else
-      ^{#1}
-    \fi
-  }
+        ^{#1}
+    \fi}
 
-\NewDocumentCommand{\@PdvParseVariable}
-  { >{\SplitList{,}}m}
-  {
+\NewDocumentCommand{\@PdvParseVariable}{>{\SplitList{,}}m}{%
     \setcounter{PdvParseExponentArgumentCounter}{0}
-    \ProcessList{#1}{\@PdvParseExponent}
-  }
+    \ProcessList{#1}{\@PdvParseExponent}}
 
-\NewDocumentCommand{\pdvDisplay}
-  {so>{\SplitList{;}}mooo}
-  {
-    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-    \frac
-      {\partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}}
-      {\ProcessList{#3}{\@PdvParseVariable}}
-    \IfValueT{#6}
-    {
-      \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-      \rvert_{#6}
-      \IfBooleanT{#1}{\mathclose{}}
-    }
-  }
+\NewDocumentCommand{\mpdv}{s>{\SplitList{;}}mmo}{\IfBooleanTF{#1}%
+    {\frac%
+        {\partial^{#3}\IfValueT{#4}{#4}}
+        {\ProcessList{#2}{\@PdvParseVariable}}}%
+    {\partial^{#3}\IfValueT{#4}{#4}/\ProcessList{#2}{\@PdvParseVariable}}}
 
-\NewDocumentCommand{\pdvInline}
-  {so>{\SplitList{;}}mooo}
-  {
-    \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-    \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
-    /
-    \ProcessList{#3}{\@PdvParseVariable}
-    \IfValueT{#6}
-    {
-      \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-      \rvert_{#6}
-      \IfBooleanT{#1}{\mathclose{}}
-    }
-  }
-
-\NewDocumentCommand{\pdv}
-  {so>{\SplitList{;}}mooo}
-  {
-    \mathchoice
-      {
-        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-        \frac
-          {\partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}}
-          {\ProcessList{#3}{\@PdvParseVariable}}
-        \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-      }
-      {
-        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
-        /
-        \ProcessList{#3}{\@PdvParseVariable}
-        \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-      }
-      {
-        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
-        /
-        \ProcessList{#3}{\@PdvParseVariable}
-        \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-      }
-      {
-        \IfValueT{#6}{\IfBooleanT{#1}{\mathopen{}\kern-\nulldelimiterspace\left.}}
-        \partial \IfValueT{#4}{^{#4} \IfValueT{#5}{#5}}
-        /
-        \ProcessList{#3}{\@PdvParseVariable}
-        \IfValueT{#6}
-        {
-          \IfBooleanTF{#1}{\right}{\IfValueT{#2}{#2}}
-          \rvert_{#6}
-          \IfBooleanT{#1}{\mathclose{}}
-        }
-      }
-  }
-
-
-% Set builder
-% \set{x \st P(x)} -> {x | P(x)}
-% Invoking this with a * as in \set* will grow the {|} to fit the contents like  a \left\right pair.
-% Invoking this with a size command as an argument (e.g. \set[\big]) will set the {|} to that size.
 \providecommand{\st}{}
+
 \newcommand{\SetSymbol}[1][]{%
-    \nonscript\;#1\vert
-    \allowbreak
-    \nonscript\;
+    \nonscript\;#1\vert%
+    \allowbreak%
+    \nonscript\;%
     \mathopen{}}
+
 \DeclarePairedDelimiterX{\set}[1]{\{}{\}}{%
-    \renewcommand{\st}{\SetSymbol[\delimsize]}
+    \renewcommand{\st}{\SetSymbol[\delimsize]}%
     #1}
 
-% Group generated by elements with relations
-% \grp{x \st P(x)} -> ⟨x | P(x)⟩
-% The same  comments as for \set apply here.
 \DeclarePairedDelimiterX{\grp}[1]{\langle}{\rangle}{%
-    \renewcommand{\st}{\SetSymbol[\delimsize]}
+    \renewcommand{\st}{\SetSymbol[\delimsize]}%
     #1}
 
-% Short hands for matrix
 \newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
 \newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
 \newcommand{\Bmat}[1]{\begin{Bmatrix}#1\end{Bmatrix}}
