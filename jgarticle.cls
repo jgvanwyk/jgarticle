@@ -170,19 +170,6 @@
 % Overrides
 \renewcommand{\phi}{\varphi}
 \renewcommand{\epsilon}{\varepsilon}
-
-\renewcommand{\Gamma}{\varGamma}
-\renewcommand{\Delta}{\varDelta}
-\renewcommand{\Pi}{\varPi}
-\renewcommand{\Theta}{\varTheta}
-\renewcommand{\Xi}{\varXi}
-\renewcommand{\Lambda}{\varLambda}
-\renewcommand{\Sigma}{\varSigma}
-\renewcommand{\Upsilon}{\varUpsilon}
-\renewcommand{\Phi}{\varPhi}
-\renewcommand{\Psi}{\varPsi}
-\renewcommand{\Omega}{\varOmega}
-
 \renewcommand{\emptyset}{\varnothing}
 
 \let\Re\@jgundefined
@@ -196,9 +183,8 @@
 % Relations
 \newcommand{\deq}{\vcentcolon=}
 \newcommand{\deqby}{=\vcentcolon}
-\newcommand{\iso}{\cong}
+\newcommand{\iso}{\simeq}
 \newcommand{\isoto}{\xrightarrow{\smash{\raisebox{-0.65ex}{\ensuremath{\sim}}}}}
-
 \newcommand{\comp}{\circ}
 
 % Linear algebra
@@ -207,6 +193,7 @@
 
 % Operators
 \DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Id}{Id}
 \DeclareMathOperator{\supp}{supp}
 \DeclareMathOperator{\dist}{dist}
 \DeclareMathOperator{\im}{im}
@@ -230,7 +217,8 @@
 \newcommand{\NN}{\numset{N}}
 \newcommand{\KK}{\numset{K}}
 \newcommand{\ZZ}{\numset{Z}}
-\newcommand{\Sph}[1]{\numset{S}^{#1}}
+\newcommand{\FF}{\numset{F}}
+\newcommand{\Sph}{\numset{S}}
 \NewDocumentCommand{\SymGrp}{m}{S_{#1}}
 
 \providecommand{\st}{}
@@ -244,7 +232,6 @@
 % Modifiers
 \renewcommand{\vec}[1]{\mathbf{#1}}
 \newcommand{\utilde}[1]{\underaccent{\tilde}{#1}}
-\NewDocumentCommand{\clsr}{sm}{\IfBooleanTF{#1}{\overline{#2}}{\bar{#2}}}
 
 % Linear algebra
 \newcommand{\dsum}{\oplus}
@@ -254,15 +241,14 @@
 \newcommand{\bigdprod}{\prod}
 \newcommand{\bigdsum}{\bigoplus}
 \newcommand{\bigtprod}{\bigotimes}
-\newcommand{\embeds}{\hookrightarrow}
-\newcommand{\injects}{\hookrightarrow}
+\newcommand{\inclusion}{\hookrightarrow}
 
+\DeclareMathOperator{\Mat}{Mat}
 \DeclareMathOperator{\GL}{GL}
 \DeclareMathOperator{\Hom}{Hom}
 \DeclareMathOperator{\End}{End}
 \newcommand{\Ext}{\Lambda}
-\newcommand{\Alt}{\Ext}
-\newcommand{\Sym}{\Sigma}
+\newcommand{\Sym}{S}
 
 \newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
 \newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
@@ -270,11 +256,11 @@
 \newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
 \newcommand{\Vmat}[1]{\begin{Vmatrix}#1\end{Vmatrix}}
 
+\newcommand{\blank}{{-}}
+
 % Fourier transform
 \newcommand{\Sw}{\mathcal{S}}
-\NewDocumentCommand{\ft}{sm}{\IfBooleanTF{#1}{\widehat{#2}}{\hat{#2}}}
 \newcommand{\Ft}{\mathcal{F}}
-\NewDocumentCommand{\invft}{sm}{\IfBooleanTF{#1}{\widecheck{#2}}{\check{#2}}}
 \newcommand{\conv}{\ast}
 
 % Differential operators
@@ -283,16 +269,19 @@
 \DeclareMathOperator{\PDO}{PDO}
 \DeclareMathOperator{\PsDO}{\upPsi DO}
 \newcommand{\prinsymb}{\sigma}
+\DeclareMathOperator{\ind}{ind}
 
 % Manifolds
+\newcommand{\VecF}{\mathcal{X}}
 \newcommand{\DForm}{\Omega}
 \newcommand{\HForm}{\mathcal{H}}
 \newcommand{\Sec}{\Gamma}
-\newcommand{\vol}{\mathrm{vol}}
+%\newcommand{\vol}{\mathrm{vol}}
 \newcommand{\conn}{\nabla}
-\newcommand{\lapl}{\upDelta}
+\newcommand{\lapl}{\Delta}
 \newcommand{\hstar}{\ast}
 \DeclareMathOperator{\divg}{div}
+\newcommand{\hook}{\mathop{\lrcorner}}
 
 % Functional analysis
 \newcommand{\BLOP}{\mathcal{B}}
