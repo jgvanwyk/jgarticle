@@ -1,0 +1,198 @@
+% Load the article class, forwarding all provided options to it
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+\LoadClass{article}
+
+% Packages
+
+\RequirePackage{xparse}
+\RequirePackage{xcolor}
+\RequirePackage{amsmath}
+\RequirePackage{mathdots}
+\RequirePackage{hyperref}
+\RequirePackage{amsthm}
+\RequirePackage{mathtools}
+\RequirePackage{newtxtext,newtxmath}
+\RequirePackage[cal=boondox]{mathalpha}
+\RequirePackage{enumitem}
+\RequirePackage{tikz-cd}
+\RequirePackage[nameinlink,capitalise]{cleveref}
+
+% Styling
+\setlist{%
+    label         = (\alph*),
+    listparindent = \parindent,
+    topsep        = \smallskipamount,
+    parsep        = \parskip,
+    left          = .5ex}
+
+\tikzcdset{arrow style = math font}
+
+\if@titlepage
+    \let\articlemaketitle\maketitle
+    \renewcommand{\maketitle}{\hypersetup{pageanchor=false}\articlemaketitle}
+\fi
+
+% Spacing around display environments
+\AtBeginDocument{%
+    \bigskipamount.7\baselineskip plus.7\baselineskip
+      \medskipamount\bigskipamount \divide\medskipamount\tw@
+      \smallskipamount\medskipamount \divide\smallskipamount\tw@
+      \abovedisplayskip\medskipamount
+      \belowdisplayskip \abovedisplayskip
+      \abovedisplayshortskip\abovedisplayskip
+      \advance\abovedisplayshortskip-1\abovedisplayskip
+      \belowdisplayshortskip\abovedisplayshortskip
+      \advance\belowdisplayshortskip 1\smallskipamount
+      \jot\baselineskip \divide\jot 4 \relax}
+
+\newcommand{\defn}{\emph}
+\newcommand{\comment}[1]{\textcolor{red}{#1}}
+
+\newcommand{\deq}{\vcentcolon=}
+\newcommand{\deqby}{=\vcentcolon}
+\newcommand{\iso}{\simeq}
+\newcommand{\comp}{\circ}
+
+% Overrides
+\renewcommand{\Gamma}{\varGamma}
+\renewcommand{\Lambda}{\varLambda}
+\renewcommand{\Omega}{\varOmega}
+
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+\renewcommand{\emptyset}{\varnothing}
+
+\let\Re\@jgundefined
+\let\Im\@jgundefined
+\DeclareMathOperator{\Re}{Re}
+\DeclareMathOperator{\Im}{Im}
+
+\renewcommand{\implies}{\Rightarrow}
+\renewcommand{\iff}{\Leftrightarrow}
+
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\Id}{Id}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator*{\Res}{Res}
+
+% Delimiters
+\DeclarePairedDelimiter{\paren}{(}{)}
+\DeclarePairedDelimiter{\abs}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\modl}{\lvert}{\rvert}
+\DeclarePairedDelimiter{\norm}{\lVert}{\rVert}
+\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\DeclarePairedDelimiter{\innprod}{\langle}{\rangle}
+
+% Sets
+\let\numset\vvmathbb
+\newcommand{\RR}{\numset{R}}
+\newcommand{\CC}{\numset{C}}
+\newcommand{\QQ}{\numset{Q}}
+\newcommand{\NN}{\numset{N}}
+\newcommand{\KK}{\numset{K}}
+\newcommand{\ZZ}{\numset{Z}}
+\newcommand{\FF}{\numset{F}}
+\newcommand{\Sph}{\numset{S}}
+\newcommand{\Trs}{\numset{T}}
+\newcommand{\CP}{\numset{CP}}
+\newcommand{\RP}{\numset{RP}}
+\newcommand{\SymGrp}{\mathfrak{S}}
+
+\providecommand{\st}{}
+\DeclarePairedDelimiterX{\set}[1]{\{}{\}}{%
+    \renewcommand{\st}{:}%
+    #1}
+\DeclarePairedDelimiterX{\grp}[1]{\langle}{\rangle}{%
+    \renewcommand{\st}{:}%
+    #1}
+
+% Modifiers
+\renewcommand{\vec}{\mathbf}
+\newcommand{\utilde}[1]{\underaccent{\tilde}{#1}}
+
+% Linear algebra
+\newcommand{\dsum}{\oplus}
+\newcommand{\dprod}{\times}
+\newcommand{\tprod}{\otimes}
+\newcommand{\kprod}{\otimes}
+\newcommand{\bigdprod}{\prod}
+\newcommand{\bigdsum}{\bigoplus}
+\newcommand{\bigtprod}{\bigotimes}
+\newcommand{\inclus}{\hookrightarrow}
+
+\DeclareMathOperator{\Mat}{Mat}
+\DeclareMathOperator{\GL}{GL}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Sp}{Sp}
+\DeclareMathOperator{\SO}{SO}
+\newcommand{\Ext}{\Lambda}
+\newcommand{\Sym}{S}
+
+\newcommand{\pmat}[1]{\begin{pmatrix}#1\end{pmatrix}}
+\newcommand{\bmat}[1]{\begin{bmatrix}#1\end{bmatrix}}
+\newcommand{\Bmat}[1]{\begin{Bmatrix}#1\end{Bmatrix}}
+\newcommand{\vmat}[1]{\begin{vmatrix}#1\end{vmatrix}}
+\newcommand{\Vmat}[1]{\begin{Vmatrix}#1\end{Vmatrix}}
+
+\newcommand{\blank}{{-}}
+
+% Fourier transform
+\newcommand{\Sw}{\mathcal{S}}
+\newcommand{\Ft}{\mathcal{F}}
+\newcommand{\conv}{\ast}
+
+% Manifolds
+\newcommand{\Sec}{\Gamma}
+\newcommand{\conn}{\nabla}
+\newcommand{\lapl}{\Delta}
+\newcommand{\hstar}{\ast}
+\DeclareMathOperator{\divg}{div}
+\newcommand{\hook}{\mathop{\lrcorner}}
+\newcommand{\del}{\partial}
+\newcommand{\DForm}{\Omega}
+
+% Functional analysis
+\newcommand{\BLOP}{\mathcal{B}}
+
+% Derivatives
+\NewDocumentCommand{\dv}{smo}{\IfBooleanTF{#1}%
+    {\frac{d\IfValueT{#3}{#3}}{d#2}}%
+    {d\IfValueT{#3}{#3}/d#2}}
+
+\NewDocumentCommand{\mdv}{smmo}{\IfBooleanTF{#1}%
+    {\frac{d^{#3}\IfValueT{#4}{#4}}{d#2^{#3}}}%
+    {d^{#3}\IfValueT{#4}{#4}/d#1^{#3}}}
+
+\NewDocumentCommand{\pdv}{smo}{\IfBooleanTF{#1}%
+    {\frac{\partial\IfValueT{#3}{#3}}{\partial #2}}%
+    {\partial\IfValueT{#3}{#3}/\partial #2}}
+
+\NewDocumentCommand{\@PdvParseVariable}{>{\SplitList{,}}m}{\ProcessList{#1}{\@PdvParseExponent}}
+\NewDocumentCommand{\@PdvParseExponent}{m}{\partial #1}
+
+\NewDocumentCommand{\mpdv}{s>{\SplitList{,}}mmo}{\IfBooleanTF{#1}%
+    {\frac%
+        {\partial^{#3}\IfValueT{#4}{#4}}
+        {\ProcessList{#2}{\@PdvParseVariable}}}%
+    {\partial^{#3}\IfValueT{#4}{#4}/\ProcessList{#2}{\@PdvParseVariable}}}
+
+% Meta
+\newcommand{\omitted}[1]{\widehat{#1}}
+
+\NewDocumentCommand{\evalat}{smm}{\IfBooleanTF{#1}%
+    {\mathopen{}%
+        \kern-\nulldelimiterspace%
+        \left.%
+        #2%
+        \right\rvert_{#3}%
+        \mathclose{}}%
+    {#2\rvert_{#3}}}
+
+\let\restto\evalat
